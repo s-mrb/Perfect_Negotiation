@@ -1,17 +1,23 @@
+// make sure this PORT is same as the one use in line 2 of peer_connection
+var PORT = 55555
+
 const express = require('express')
 const app = express()
-const dotenv = require('dotenv')
 const Set_CORS = require('./Set_CORS')
-dotenv.config()
 
 var server = require('http').createServer(app)
 var socket_io = require('socket.io')
-const { symlinkSync } = require('fs')
-const { exit } = require('process')
+
+// store users, users = {user_id:[count, socket]}
+// count tells the number of users that connected with signaling server before this user
 var users = {}
+var count = 0
+
 // io is the object which give access to different methods.
 var io = socket_io(server)
-var count = 0
+
+// on receiving new connection add its socket and 
+// count of users already connected with signaling server in users array against this user id 
 io.on('connection', (socket) => {
   console.log('new connection!!')
 
@@ -26,9 +32,13 @@ io.on('connection', (socket) => {
   })
 
 
-  socket.on("signal",({signal_object,self_id, peerB_id}, callback)=>{
+  // when a peer (recognized by self_id) sends signal to another peer (recognized by peerB_id)
+  // then assign one of these two as polite peer (peer which in case of collision will drop its offer)
+  // users[self_id][0] tells the number of peers connected with signaling server before this peer, hence
+  // if this number for caller (self_id) is smaller then make peerB as polite,
+  // we make peerB polite by adding Polite attribute in the signal object sent by peerA to peerB 
+  socket.on("signal",({signal_object, self_id, peerB_id}, callback)=>{
 
-  if (peerB_id){
 
     // count is stored to know which peer connected first with the signaling server
     // the peer connected first with the server is assumed to be polite peer
@@ -40,11 +50,9 @@ io.on('connection', (socket) => {
 
     }
       users[peerB_id][1].emit("signal", signal_object, ()=>{})
-  }
   })
 })
 
-var PORT = process.env.PORT || 55555
 app.use(Set_CORS)
 
 server.listen(PORT, () => {

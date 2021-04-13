@@ -1,16 +1,12 @@
-// const { v4: uuidv4 } = require('uuid');
-
-var socket = io('http://localhost:55555/', {
+// make sure this PORT is same as the one on which server is running
+var PORT = 55555
+var socket = io(`http://localhost:${PORT}/`, {
   transports: ['websocket', 'polling', 'flashsocket'],
 })
 
 
 
 
-
-// const config = {
-//   iceServers: [{ urls: 'stun:stun.mystunserver.tld' }],
-// }
 
 // Better then above commented one
 const config = {
@@ -54,16 +50,6 @@ const pc = new RTCPeerConnection(config)
     }
   }
   
-
-
-
-
-
-
-
-
-
-
 
 
 
