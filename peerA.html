@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous"></script>
+
+  <body>
+    <h1>Peer A</h1>
+
+    <video class="selfview" controls width="250" muted></video>
+
+    <video class="remoteview" controls width="250"></video>
+
+    <input id="peer_id" style="display: block; margin-top: 2%;">Enter PeerID</input>
+    <button onclick="Call()">Call</button>
+  </body>
+  <script src="./peer_connection.js"></script>
+</html>

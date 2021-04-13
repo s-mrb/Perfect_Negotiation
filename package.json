@@ -1,0 +1,20 @@
+{
+  "name": "Perfect_Negotiation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "signaling_server.js",
+  "scripts": {
+    "start": "node signaling_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "const": "^1.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.0.1",
+    "uuid": "^8.3.2"
+  }
+}
