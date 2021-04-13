@@ -16,6 +16,10 @@ io.on('connection', (socket) => {
   console.log('new connection!!')
 
   socket.on('register', ({ peerA_id }, callback) => {
+
+    // add peer socket against its id
+    // count is stored to know which peer connected first with the signaling server
+    // the peer connected first with the server is assumed to be polite peer
     users[peerA_id] = [count++, socket]
 
     console.log('USER_ID ', peerA_id)
@@ -26,6 +30,8 @@ io.on('connection', (socket) => {
 
   if (peerB_id){
 
+    // count is stored to know which peer connected first with the signaling server
+    // the peer connected first with the server is assumed to be polite peer
     if ((users[self_id][0]) < (users[peerB_id][0])){
       signal_object.polite = true
     }
